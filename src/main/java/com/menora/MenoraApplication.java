@@ -1,4 +1,4 @@
-package com.menora.app;
+package com.menora;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

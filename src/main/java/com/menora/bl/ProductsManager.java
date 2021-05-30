@@ -17,17 +17,20 @@ import java.util.*;
 @Component
 @Data
 public class ProductsManager {
+
+    // Request cache
     Map<String, Request> requests = new HashMap<>();
 
     private final ApplicationPropertyService applicationPropertyService;
     private final String FILE_NAME = "Request.xml";
     private Date lastDate = new Date();
+    private boolean isInitialized = false;
 
     @Scheduled(initialDelay = 10 * 1000, fixedDelay = 1 * 1000)
-    void executeTask() {
+    public void executeTask() {
         try {
 
-            if (durationIsPassed()) {
+            if (durationIsPassed() || !isInitialized) {
                 String vaultLocation = applicationPropertyService.getVaultLocation();
                 File file = new File(vaultLocation + "\\" + FILE_NAME);
                 JAXBContext jaxbContext = JAXBContext.newInstance(Request.class);
@@ -35,11 +38,10 @@ public class ProductsManager {
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                 Request request = (Request) jaxbUnmarshaller.unmarshal(file);
 
-                if (!requests.containsKey(request.getRequestDetails().getId())) {
-                    requests.put(request.getRequestDetails().getId(), request);
-                }
+                requests.put(request.getRequestDetails().getId(), request);
 
                 lastDate = new Date();
+                isInitialized = true;
             }
 
         } catch (Exception e) {

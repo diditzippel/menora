@@ -3,12 +3,12 @@ package com.menora.bl;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 @Service
-// Manage property file
 public class ApplicationPropertyService {
 
     public String getVaultLocation() {
@@ -24,7 +24,7 @@ public class ApplicationPropertyService {
     private String getProperty(String propertyName) {
 
         String propertyValue = null;
-        try (InputStream input = new FileInputStream("C:\\Users\\David\\Downloads\\menoraUpdate\\menoraConfig.properties")) {
+        try (InputStream input = getPropertiesFile()) {
 
             Properties prop = new Properties();
 
@@ -39,5 +39,11 @@ public class ApplicationPropertyService {
         }
 
         return propertyValue;
+    }
+
+    private FileInputStream getPropertiesFile() throws FileNotFoundException {
+
+        String projectFolder = System.getProperty("user.dir");
+        return new FileInputStream(projectFolder + "\\menoraConfig.properties");
     }
 }
