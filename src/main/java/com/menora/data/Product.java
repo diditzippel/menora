@@ -1,4 +1,4 @@
-package com.menora;
+package com.menora.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,10 +17,13 @@ public class Product implements Serializable {
 
     @XmlElement(name = "Type", required = true)
     private String type;
+
     @XmlElement(name = "Price", required = true)
     private String price;
+
     @XmlElement(name = "StartDate", required = true)
     private String startDate;
+
     @XmlElement(name = "EndDate", required = true)
     private String endDate;
 }

@@ -1,4 +1,4 @@
-package com.menora;
+package com.menora.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,17 +8,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RequestDetails")
+@XmlType(name = "Event")
 @NoArgsConstructor
 @Data
-public class RequestDetails implements Serializable {
+public class Event implements Serializable {
 
     @XmlElement(name = "Id", required = true)
     private String id;
-    @XmlElement(name = "AcceptDate", required = true)
-    private String acceptDate;
-    @XmlElement(name = "SourceCompany", required = true)
-    private String sourceCompany;
+
+    @XmlElement(name = "Type", required = true)
+    private String type;
+
+    @XmlElement(name = "InsuredId", required = true)
+    private String insuredId;
+
+    @XmlElement(name = "Product", required = true)
+    private List<Product> products;
 }
